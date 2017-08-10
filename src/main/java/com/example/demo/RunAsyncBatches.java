@@ -10,34 +10,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class RunAsyncBatches implements CommandLineRunner {
 
-  private BatchTask runAsyncBatch1;
-  private BatchTask runAsyncBatch2;
-  private BatchTask runAsyncBatch3;
-  private BatchTask runAsyncBatch4;
-
+  private BatchTask runAsyncBatch;
   private TaskLoader taskLoader;
 
   @Autowired
-  public RunAsyncBatches(BatchTask runAsyncBatch1,
-      BatchTask runAsyncBatch2, BatchTask runAsyncBatch3,
-      BatchTask runAsyncBatch4, TaskLoader taskLoader) {
-    this.runAsyncBatch1 = runAsyncBatch1;
-    this.runAsyncBatch2 = runAsyncBatch2;
-    this.runAsyncBatch3 = runAsyncBatch3;
-    this.runAsyncBatch4 = runAsyncBatch4;
-
+  public RunAsyncBatches(BatchTask runAsyncBatch, TaskLoader taskLoader) {
+    this.runAsyncBatch = runAsyncBatch;
     this.taskLoader = taskLoader;
   }
 
   @Override
   public void run(String... args) throws Exception {
+
     taskLoader.createTasks(1000);
 
-    runAsyncBatch1.runBatch("B1");
-    runAsyncBatch2.runBatch("B2");
-    runAsyncBatch3.runBatch("B3");
-    runAsyncBatch4.runBatch("B4");
+    runBatches(4);
   }
 
+  private void runBatches(int batchCount) throws Exception {
+    for (Integer i = 0; i < batchCount; i++) {
+      runAsyncBatch.runBatch("B"+batchCount);
+    }
+  }
 
 }
