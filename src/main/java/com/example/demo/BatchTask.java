@@ -15,19 +15,10 @@ import org.springframework.stereotype.Component;
 public class BatchTask {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(BatchTask.class);
-
-  private TaskRepository taskRepository;
-  private TaskHistoryRepository taskHistoryRepository;
-  private LockTaskRepository lockTaskRepository;
   private TaskService taskService;
 
 
-  public BatchTask(TaskRepository taskRepository,
-      TaskHistoryRepository taskHistoryRepository,
-      LockTaskRepository lockTaskRepository, TaskService taskService) {
-    this.taskRepository = taskRepository;
-    this.taskHistoryRepository = taskHistoryRepository;
-    this.lockTaskRepository = lockTaskRepository;
+  public BatchTask(TaskService taskService) {
     this.taskService = taskService;
   }
 
