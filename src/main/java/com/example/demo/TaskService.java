@@ -31,9 +31,6 @@ public class TaskService {
     this.taskHistoryRepository = taskHistoryRepository;
   }
 
-  //////////////////
-
-
   public List<Task> getTasks(int page, int pageSize, String batch) {
     LOGGER.info(batch + "==============>>>>start page = {}", page);
     lockTaskRepository.lockTable();
@@ -55,17 +52,6 @@ public class TaskService {
     taskHistoryRepository.save(taskHistory);
     taskRepository.delete(task);
     LOGGER.info(batch + "==============>>>>finished task = {}", task.getName());
-  }
-
-
-  public List<Task> searchPendingWithLock(int page, int pageSize) {
-    Page<Task> tasks = taskRepository.searchPendingWithLock(new PageRequest(page, pageSize));
-    return tasks.getContent();
-  }
-
-  public List<Task> searchPendingWithoutLock(int page, int pageSize) {
-    Page<Task> tasks = taskRepository.searchPendingWithLock(new PageRequest(page, pageSize));
-    return tasks.getContent();
   }
 
 }
