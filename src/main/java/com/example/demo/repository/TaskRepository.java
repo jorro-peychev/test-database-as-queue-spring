@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.domain.Task;
+import java.util.List;
 import javax.persistence.LockModeType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,4 +27,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
   @Query("SELECT t FROM Task t WHERE lockDate IS NULL")
   Page<Task> searchPendingTasks(Pageable pageRequest);
+
+  List<Task> findAllByIdLessThan(Long id);
+
+  List<Task> findAllByIdGreaterThan(Long id);
 }

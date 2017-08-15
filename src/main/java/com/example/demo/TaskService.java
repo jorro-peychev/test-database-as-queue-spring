@@ -24,14 +24,16 @@ public class TaskService {
   private TaskHistoryRepository taskHistoryRepository;
 
   public TaskService(TaskRepository taskRepository,
-      LockTaskRepository lockTaskRepository,
-      TaskHistoryRepository taskHistoryRepository) {
+                     LockTaskRepository lockTaskRepository,
+                     TaskHistoryRepository taskHistoryRepository) {
+
     this.taskRepository = taskRepository;
     this.lockTaskRepository = lockTaskRepository;
     this.taskHistoryRepository = taskHistoryRepository;
   }
 
   public List<Task> getTasks(int page, int pageSize, String batch) {
+
     LOGGER.info(batch + "==============>>>>start page = {}", page);
     lockTaskRepository.lockTable();
 
@@ -45,6 +47,7 @@ public class TaskService {
   }
 
   public void processTask(Task task, String batch) {
+
     TaskHistory taskHistory = new TaskHistory();
     taskHistory.setTaskId(task.getId());
     taskHistory.setName(task.getName());
@@ -54,4 +57,18 @@ public class TaskService {
     LOGGER.info(batch + "==============>>>>finished task = {}", task.getName());
   }
 
+  public Task findById(Long id) {
+
+    return taskRepository.findById(id);
+  }
+
+  public List<Task> findTasksLessThan(Long number) {
+
+    return taskRepository.findAllByIdLessThan(number);
+  }
+
+  public List<Task> findTasksBiggerThan(Long number) {
+
+    return taskRepository.findAllByIdGreaterThan(number);
+  }
 }
